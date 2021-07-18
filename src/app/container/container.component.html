@@ -1,0 +1,107 @@
+<h3 style="color: red;">Teachers</h3>
+<div class="table-teachers">
+  <table>
+        <tr>
+            <th>No</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Birthday</th>
+            <th>Date of employment</th>
+            <th>Phone number</th>
+        </tr>
+
+        <tr *ngFor="let teacher of teachers">
+            <td>{{teacher.id}}</td>
+            <td>{{teacher.name}}</td>
+            <td>{{teacher.surname}}</td>
+            <td>{{teacher.dateOfBirth}}</td>
+            <td>{{teacher.dateOfEmployment}}</td>
+            <td>{{teacher.phone}}</td>
+        </tr>
+  </table>
+  <br /><br />
+
+
+        <form #teacherForm="ngForm" (ngSubmit)="onSubmitTeacher(teacherForm.value)">
+          <input type="hidden" name="id" [ngModel]="selectedTeacher ? selectedTeacher.id : null" /> <br />
+          <label><b>Name: </b >
+          <input type="text" name="name" style="margin-left: 101px" [ngModel]="selectedTeacher ? selectedTeacher.name : null" /> <br/></label> <br />
+          <label><b>Surname: </b>
+          <input type="text" name="surname" style="margin-left: 79px" [ngModel]="selectedTeacher ? selectedTeacher.surname : null" /> <br/></label> <br />
+          <label><b>Birthday: </b>
+          <input type="date" name="dateOfBirth"style="margin-left: 80px; width: 170px" datetime="yyyy-MM-dd" [ngModel]="selectedTeacher ? selectedTeacher.dateOfBirth : null" /> <br/></label> <br />
+          <label><b>Date of Employment: </b>
+          <input type="date" name="dateOfEmployment" style="width: 170px" [ngModel]="selectedTeacher ? selectedTeacher.dateOfEmployment : null" /> <br/> </label> <br />
+          <label><b>Phone number: </b>
+          <input type="text" name="phone" style="margin-left: 40px" [ngModel]="selectedTeacher ? selectedTeacher.phone : null" /> <br/><br/></label>
+
+          <button>Submit</button>
+        </form>
+      <br />
+
+        <label><b>Select teacher for update: </b></label>
+        <select [(ngModel)]="selectedTeacher">
+          <option></option>
+          <option *ngFor="let teacher of teachers" [ngValue]="teacher" >{{teacher.name + ' ' + teacher.surname}}</option>
+        </select>
+      <br />
+
+        <label style="margin-top: 20px"><b>Select teacher for delete: </b></label>
+        <select [(ngModel)]="selectedTeacherForDelete" style="margin-left: 7px">
+          <option></option>
+          <option *ngFor="let teacher of teachers" [ngValue]="teacher" >{{teacher.name + ' ' + teacher.surname}}</option>
+        </select>
+        <button (click)="onDeleteTeacher()" style="margin-left: 10px">Delete Teacher</button>
+  <br /><br />
+</div>
+
+<div class="table-subjects">
+
+  <h3 style="color: red;">Subjects</h3>
+  <table>
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Teacher</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let subject of subjects">
+            <td>{{subject.id}}</td>
+            <td>{{subject.name}}</td>
+            <td>{{subject.description}}</td>
+            <td>{{subject.teacherName}}</td>
+        </tr>
+    </tbody>
+  </table>
+
+  <br /><br />
+  <label style="margin-top: 20px"><b>Select subject for update: </b></label>
+  <select [(ngModel)]="selectedSubject" style="width: 175px;">
+    <option></option>
+    <option *ngFor="let subject of subjects" [ngValue]="subject">{{subject.name}}</option>
+  </select>
+  <form #subjectForm="ngForm" (ngSubmit)="onSubmitSubject(subjectForm.value)">
+    <input type="hidden" name="id" [ngModel]="selectedSubject ? selectedSubject.id : null" /> <br />
+    <label><b>Subject's name: </b></label>
+    <input type="text" name="name" style="margin-left: 63px" [ngModel]="selectedSubject ? selectedSubject.name : null" /><br /><br />
+    <label><b>Subject's description: </b></label>
+    <input type="text" name="description" style="margin-left: 23px" [ngModel]="selectedSubject ? selectedSubject.description : null" /> <br /><br />
+    <label><b>Select Teacher: </b></label>
+    <select name="idTeacher" style="margin-left: 68px; width: 175px;" [ngModel]="selectedSubject ? selectedSubject.idTeacher : null">
+      <option *ngFor="let teacher of teachers" [selected]="selectedSubject ? teacher.id === selectedSubject.idTeacher : false" [value]="teacher.id" >{{teacher.name + ' ' + teacher.surname}}</option>
+    </select><br /><br />
+    <button>Submit</button>
+  </form>
+
+  <br />
+  <label style="margin-top: 20px;width: 100px;"><b>Select subject for delete:</b></label>
+  <select [(ngModel)]="selectedSubjectForDelete" style="margin-left: 7px;width: 175px;">
+    <option></option>
+    <option *ngFor="let subject of subjects" [ngValue]="subject" >{{subject.name}}</option>
+  </select>
+  <button (click)="onDeleteSubject()" style="margin-left: 10px">Delete Subject</button>
+
+</div>
